@@ -38,10 +38,11 @@ def conversion(name1: str, name2: str, sm: int):  # конвертируем
     }
 
     response = requests.get(url=url, headers=headers, params=data)
-    print(response.json())
+    return {'in': name1, 'out': name2, 'count': sm, 'convert': response.json()['getSum']}
 
 
 
 
-imported_names()
-conversion('0x', 'Aave', 100)
+#imported_names()
+d = conversion('0x', 'Aave', 100)
+print(f'{d['count']} {d['in']}  =  {d['convert']} {d['out']}')
