@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
 def imported_names() -> list:  # достаем имена агентов
@@ -42,7 +43,38 @@ def conversion(name1: str, name2: str, sm: int):  # конвертируем
 
 
 
-
 #imported_names()
-d = conversion('0x', 'Aave', 100)
-print(f'{d['count']} {d['in']}  =  {d['convert']} {d['out']}')
+#d = conversion('RUB', 'Aave', 100)
+#print(f'{d['count']} {d['in']}  =  {d['convert']} {d['out']}')
+
+def tester():
+    while True:
+        name1, name2, start = 'RUB', 'Algorand', 30_000
+        d = conversion(name1, name2, start)
+        conv = d['convert']
+        print(f'{d['count']} {d['in']}  =  {d['convert']} {d['out']}')
+
+        d_new = conversion(name2, name1, conv)
+        print(f'Если продать сейчас получим {d_new['convert']} {name1}')
+
+        time.sleep(15)
+
+
+def plus():
+    r_start = 3_000
+    names = imported_names()
+    res = []
+    with open('test.txt', 'w') as file:
+        for name in names:
+            d = conversion('RUB', name, r_start)
+            c = d['convert']
+            d1 = conversion(name, 'СБП RUB', c)
+            #res.append(d1['convert'])
+            file.write(d1['convert'] + '\n')
+
+    
+
+plus()
+
+
+    
